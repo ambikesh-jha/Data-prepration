@@ -11,19 +11,15 @@ class Conversion:
 class MeasurementConverter:
     def __init__(self):
         self.conversions = {
-            'IN': [Conversion('CM', 2.54),Conversion('MR', 0.0254, 40)],
-            'MM': [Conversion('CM', 0.1, 9),Conversion('MR', 0.001, 999)],
+            'IN': [Conversion('CM', 2.54), Conversion('MR', 0.0254, 40)],
+            'MM': [Conversion('CM', 0.1, 9), Conversion('MR', 0.001, 999)],
             'CM': Conversion('MR', 0.01, 99),
             'YD': Conversion('MR', 0.9144),
             'YARD': Conversion('MR', 0.9144),
             'FT': Conversion('MR', 0.3048),
-
-            # Weight conversions
             'OZ': Conversion('GR', 28.3495),
             'OUNCE': Conversion('GR', 28.3495),
             'GR': Conversion('KG', 0.001, 999),
-
-            # Volume conversions
             'GALLON': Conversion('LT', 3.78541),
             'GAL': Conversion('LT', 3.78541),
             'GA': Conversion('LT', 3.78541),
@@ -32,10 +28,10 @@ class MeasurementConverter:
         }
         self.unit_pattern = '|'.join(self.conversions.keys())
         self.measurement_pattern = re.compile(
-            rf'(\d+\.?\d*)\s*-\s*(\d+\.?\d*)\s*({self.unit_pattern})|'  # Range
-            rf'(\d+\.?\d*)\s*/\s*(\d+\.?\d*)\s*({self.unit_pattern})|'  # Fraction
-            rf'(\d+\.?\d*)\s*X\s*(\d+\.?\d*)\s*({self.unit_pattern})|'  # Multiplication
-            rf'(\d+\.?\d*)\s*({self.unit_pattern})',  # Single measurement
+            rf'(\d+\.?\d*)\s*-\s*(\d+\.?\d*)\s*({self.unit_pattern})(?![a-wyzA-WYZ])|'  # Range
+            rf'(\d+\.?\d*)\s*/\s*(\d+\.?\d*)\s*({self.unit_pattern})(?![a-wyzA-WYZ])|'  # Fraction
+            rf'(\d+\.?\d*)\s*[xX]\s*(\d+\.?\d*)\s*({self.unit_pattern})(?![a-wyzA-WYZ])|'  # Multiplication
+            rf'(\d+\.?\d*)\s*({self.unit_pattern})(?![a-wyzA-WYZ])',  # Single measurement
             re.IGNORECASE
         )
 
